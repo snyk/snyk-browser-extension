@@ -142,28 +142,22 @@ function drawVulnerabilities(vulnerabilities) {
 
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
 
-  const storage = await browser.storage.local.get()
-  snykApiToken = storage['apiToken']
-  document.getElementById('snykApiToken').value = snykApiToken
-  if (!storage.apiToken) {
-    $('.collapse').collapse('show')
-  }
-  
+async function retrieveSnykInformation({snykApiToken}) {
+
   let response
   try {
     const tabs = await browser.tabs.query({active: true, currentWindow: true})
     response = await browser.tabs.sendMessage(tabs[0].id, {greeting: "hello"})
   } catch (error) {
-    $('#error').toggleClass('d-none')
-    document.getElementById('errorMessage').textContent = 'Unsupported package repository website'
+    $('#errorPackageDetails').toggleClass('d-none')
+    return;
   }
 
-  document.getElementById('packageName').textContent = response.packageName
-  document.getElementById('packageVersion').textContent = `v${response.packageVersion}`
-
   if (snykApiToken && response.packageName && response.packageVersion) {
+    
+    document.getElementById('packageName').textContent = response.packageName
+    document.getElementById('packageVersion').textContent = `v${response.packageVersion}`
 
     $('#loader').toggleClass('d-none')
 
@@ -206,6 +200,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+
+  const storage = await browser.storage.local.get()
+  snykApiToken = storage['apiToken']
+  
+  if (snykApiToken) {
+    document.getElementById('snykApiToken').value = snykApiToken
+    await retrieveSnykInformation({snykApiToken})
+  }
+
+  if (!snykApiToken) {
+    $('.collapse').collapse('show')
+    $('#errorAPITokenMissing').toggleClass('d-none')
+  }
+
   document.getElementById('link_website').addEventListener('click', () => {
     return openWebPage('https://snyk.io')
   })
@@ -216,6 +227,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const snykApiTokenValue = snykApiTokenElement.value
     await browser.storage.local.set({ apiToken: snykApiTokenValue })
     $('.collapse').collapse('toggle')
+
+    if (snykApiTokenValue) {
+      $('#errorAPITokenMissing').toggleClass('d-none')
+      await retrieveSnykInformation({snykApiToken: snykApiTokenValue})
+    }
+
   })
 
 })

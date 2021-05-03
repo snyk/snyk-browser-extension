@@ -13,6 +13,7 @@
   "description": "Find, prioritize and fix vulnerabilities in the open source dependencies used to build your cloud native applications",
   "homepage_url": "https://snyk.io",
   "short_name": "snyk",
+  "content_security_policy": "script-src 'self'; object-src 'self'",
   "permissions": [
     "http://*.npmjs.com/*",
     "https://*.npmjs.com/*",
