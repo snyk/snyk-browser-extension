@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Snyk",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "icons": {
     "16": "assets/icons/snyk_logo16.png",
     "32": "assets/icons/snyk_logo32.png",
@@ -17,22 +17,11 @@
   "permissions": [
     "http://*.npmjs.com/*",
     "https://*.npmjs.com/*",
-    "webRequest",
-    "webRequestBlocking",
     "https://snyk.io/*",
     "storage"
   ],
   "author": "snyk",
-  "developer": {
-    "name": "snyk"
-  },
-  "applications": {
-    "gecko": {
-      "id": "{754FBFFD-CB4B-8192-B9A0-0B06F8CD9D17}"
-    }
-  },
   "minimum_chrome_version": "49",
-  "minimum_opera_version": "36",
   "browser_action": {
     "default_popup": "popup.html",
     "default_icon": {
