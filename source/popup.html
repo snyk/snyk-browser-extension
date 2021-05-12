@@ -9,18 +9,15 @@
 
   <body>
     <div class="app-wrapper"> 
-      <div class="row">
-        <div class="col-md-4 order-md-2 mb-4">
-          <div class="text-center">
-            <img class="d-block mx-auto" src="/assets/icons/snyk_logo64.png" alt="" />
-          </div>
-        </div>
-      </div>
+      <header class="py-2 px-3">
+        <img class="d-block" src="/assets/logo.svg" alt="" />
+      </header>
     </div>
 
-    <div id="loader" class="container mb-4 d-none">
-      <div class="d-flex justify-content-center">
-        <div class="spinner-grow" role="status" style="color: #6610f2">
+    <div id="loader" class="container d-none">
+      <div class="d-flex flex-column align-items-center justify-content-center">
+        <img src="chrome-extension://onchjapjpdppjhlnbdmckaaebgacdgbg/assets/icons/snyk_logo64.png" class="mb-4" />
+        <div class="spinner-grow" role="status">
           <span class="sr-only">Loading...</span>
         </div>
       </div>
@@ -39,16 +36,6 @@
       </div>
     </div>
 
-    <div id="errorAPITokenMissing" class="container mb-4 d-none">
-      <div class="d-flex justify-content-center">
-        <div id="errorMessage" class="alert alert-warning" role="alert">
-          <h4 class="alert-heading">
-            Please get a Snyk API token and update below
-          </h4>
-        </div>
-      </div>
-    </div>
-
     <div id="errorUnsupportedWebsite" class="container mb-4 d-none">
       <div class="d-flex justify-content-center">
         <div id="errorMessage" class="alert alert-danger" role="alert">
@@ -62,91 +49,103 @@
     </div>
 
     <div id="results" class="app-wrapper d-none">
-      <div class="row">
-        <div class="col-md-4 order-md-2 mb-4">
 
-          <ul class="list-group mb-3">
-            <li class="list-group-item d-flex justify-content-between">
-              <div>
-                <h2 class="my-0" id="packageName"></h2>
-                <span class="badge badge-secondary" id="packageVersion"></span>
+        <div id="hero" class="p-3">
+          <div class="d-flex align-items-baseline">
+            <h1 class="my-0 h4" id="packageName"></h1>
+            <span class="text-muted font-weight-normal ml-2 number" id="packageVersion"></span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center" id="vulnerabilitiesHeader">
+            <h6 class="my-0 font-weight-normal">Total Vulnerabilities</h6>
+            <div id="vulnerabilitiesCount" class="d-flex align-items-center">
+              <div id="totalVulnerabilitiesHigh" class="d-flex align-items-center counter">
+                <div class="number">0</div>
+                <div class="letter">H</div>
               </div>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div id="vulnerabilitiesHeader">
-                <h6 class="my-0">Total Vulnerabilities</h6>
-                <small class="text-muted" id="vulnerabilitiesCount"></small>
+              <div id="totalVulnerabilitiesMedium" class="d-flex align-items-center counter">
+                <div class="number">0</div>
+                <div class="letter">M</div>
               </div>
-              <span class="text-muted" id="vulnerabilitiesStatus"></span>  
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div id="licensesHeader">
-                <h6 class="my-0">Total License issues</h6>
-                <small class="text-muted" id="licensesCount"
-                  ><a class="unlock_with_pro" href="#"></a></small
-                >
+              <div id="totalVulnerabilitiesLow" class="d-flex align-items-center counter">
+                <div class="number">0</div>
+                <div class="letter">L</div>
               </div>
-              <span class="text-danger" id="licensesStatus"></span>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div id="vulnerabilitiesList">
-      </div>
-
-      <hr/>
-
-      </div>
-
-      <div id="apiKeyActivation" class="container mb-4">
-        <div id="accordion">
-          <div class="card">
-            <div class="card-header" id="headingOne">
-              <h5>
-                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                  API token
-                </button>
-                <small class="text-muted">Configure to load data</small>
-              </h5>
             </div>
-        
-            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-              <div class="card-body">
-                <div class="row justify-content-md-center">
-                  <div class="col-md-4 order-md-4 mb-4">
-                    <input
-                      type="text"
-                      class="form-control rounded-right"
-                      id="snykApiToken"
-                      placeholder="Your Snyk API token"
-                      required
-                    />
-                  
-                  </div>
-                  <button id="buttonSaveApiToken" type="submit" class="btn btn-primary">
-                    Save
-                  </button>
-                </div>
+            <span class="badge badge-light font-weight-normal" id="vulnerabilitiesCount"></span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center" d="licensesHeader">
+            <h6 class="my-0 font-weight-normal">Total License issues</h6>
+            <div id="vulnerabilitiesCount" class="d-flex align-items-center">
+              <div id="totalVulnerabilitiesHigh" class="d-flex align-items-center counter">
+                <div class="number">0</div>
+                <div class="letter">H</div>
+              </div>
+              <div id="totalLicenseIssuesMedium" class="d-flex align-items-center counter">
+                <div  class="number">0</div>
+                <div class="letter">M</div>
+              </div>
+              <div id="totalLicenseIssueslow" class="d-flex align-items-center counter">
+                <div class="number">0</div>
+                <div class="letter">L</div>
               </div>
             </div>
           </div>
         </div>
+
       </div>
 
-      <footer class="pt-4 my-md-5 pt-md-5 border-top">
-        <div class="text-center">
-          <img class="d-block mx-auto" src="/assets/icons/snyk_logo64.png" alt="" />
-          <h2>Snyk</h2>
-          <p class="lead">
-            Develop Fast. Stay Secure.
-          </p>
-          <hr />
-          <ul class="list-unstyled text-small">
-            <li><a id="link_website" class="text-muted" href="#">Learn more</a></li>
-          </ul>
+      <div id="vulnerabilitiesList" class="p-3"></div>
+
+    </div>
+
+    <div id="apiKeyActivation" class="container my-4">
+
+      <div id="errorAPITokenMissing" class="alert alert-primary d-none" role="alert">
+        <div id="errorMessage">Please get a Snyk API token and update below</div>
+      </div>
+      
+      <div id="accordion">
+          
+        <div id="headingOne">
+          <h5>
+            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Change API Token
+            </button>
+          </h5>
         </div>
-      </footer>
+    
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+          <div class="form d-flex align-items-center">
+            <input
+              type="text"
+              class="form-control number"
+              id="snykApiToken"
+              placeholder="Your Snyk API token"
+              required
+            />
+            <button id="buttonSaveApiToken" type="submit" class="btn btn-primary">
+              Save
+            </button>
+        </div>
+
+      </div>
+    </div>
+
+    <hr />
+
+    <footer class="pt-4 my-md-5 pt-md-5">
+      <div class="text-center">
+        <img class="d-block mx-auto" src="/assets/icons/snyk_logo64.png" alt="" />
+        <h2>Snyk</h2>
+        <p class="lead">
+          Develop Fast. Stay Secure.
+        </p>
+        <hr />
+        <ul class="list-unstyled text-small">
+          <li><a id="link_website" class="text-muted" href="#">Learn more</a></li>
+        </ul>
+      </div>
+    </footer>
 
   </body>
 

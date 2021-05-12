@@ -1,10 +1,317 @@
 @import 'bootstrap.min.css';
 
+$fontDisplayFallback: fallback !default;
+$fontDisplayOptional: optional !default;
+$high: #B74E29;
+$high-light: #F9D7C7;
+$medium: #C57A2B;
+$medium-light: #FBE5C9;
+$low: #7B7A91;
+$low-light: #EAEAEA;
+$border: #D2D3D8;
+$brand: #4b45a1;
+
+@font-face {
+  font-display: $fontDisplayFallback;
+  font-family: "prenton";
+  src: url("https://static.snyk.io/prod/static-assets/style/build/fonts/prenton-regular.woff2") format("woff2"),
+    url("https://static.snyk.io/prod/static-assets/style/build/fonts/prenton-regular.woff") format("woff");
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-display: $fontDisplayOptional;
+  font-family: "prenton";
+  src: url("https://static.snyk.io/prod/static-assets/style/build/fonts/prenton-italic.woff2") format("woff2"),
+    url("https://static.snyk.io/prod/static-assets/style/build/fonts/prenton-italic.woff") format("woff");
+  font-style: italic;
+  font-weight: 400;
+}
+
+@font-face {
+  font-display: $fontDisplayFallback;
+  font-family: "prenton";
+  src: url("https://static.snyk.io/prod/static-assets/style/build/fonts/prenton-medium.woff2") format("woff2"),
+    url("https://static.snyk.io/prod/static-assets/style/build/fonts/prenton-medium.woff") format("woff");
+  font-style: normal;
+  font-weight: 500;
+}
+
+@font-face {
+  font-display: $fontDisplayOptional;
+  font-family: "prenton";
+  src: url("https://static.snyk.io/prod/static-assets/style/build/fonts/prenton-medium-italic.woff2") format("woff2"),
+    url("https://static.snyk.io/prod/static-assets/style/build/fonts/prenton-medium-italic.woff") format("woff");
+  font-style: italic;
+  font-weight: 500;
+}
+
+@font-face {
+  font-display: $fontDisplayFallback;
+  font-family: "prenton";
+  src: url("https://static.snyk.io/prod/static-assets/style/build/fonts/prenton-bold.woff2") format("woff2"),
+    url("https://static.snyk.io/prod/static-assets/style/build/fonts/prenton-bold.woff") format("woff");
+  font-style: normal;
+  font-weight: 700;
+}
+
 @media only screen {
   .app-wrapper {
-    padding: 5px 15px 5px 15px;
     width: 100%;
     min-width: 450px;
     height: auto;
+
+    header {
+      background: #4b45a9;
+    }
+
   }
+
+  * {
+    font-family: 'prenton';
+  }
+
+  a {
+    color: $brand;
+  }
+
+  .number {
+    font-variant-numeric: tabular-nums;
+  }
+
+  #hero {
+
+    > :not(template) ~ :not(template) {
+      margin-top: 1rem;
+    }
+
+    h6 {
+      font-size: 15px;
+    }
+
+    #vulnerabilitiesCount {
+
+      > :not(template) ~ :not(template) {
+        margin-left: .5rem;
+      }
+  
+      .counter {
+        border-radius: 2px;
+        overflow: hidden;
+        font-size: 11px;
+        text-transform: uppercase;
+  
+        .number {
+          background: #f5f5f5;
+          color: #999;
+          padding: 0.2rem 0.5rem 0 0.5rem;
+        }
+        .letter {
+          background: #CCC;
+          color: #333;
+          padding: 0.2rem 0.5rem 0 0.5rem;
+        }
+      }
+  
+      .high {
+        .number {
+          background: $high-light;
+          color: $high;
+        }
+        .letter {
+          background: $high;
+          color: #fff;
+        }
+      }
+  
+      .medium {
+        .number {
+          background: $medium-light;
+          color: $medium;
+        }
+        .letter {
+          background: $medium;
+          color: #fff;
+        }
+      }
+  
+      .low {
+        .number {
+          background: $low-light;
+          color: $low;
+        }
+        .letter {
+          background: $low;
+          color: #fff;
+        }
+      }
+  
+    }
+
+  }
+
+  #vulnerabilitiesList {
+    background: #F6F9FD;
+    border-top: 1px solid $border;
+
+    > :not(template) ~ :not(template) {
+      margin-top: 1rem;
+    }
+
+    &:empty {
+      display: none;
+    }
+
+    .vulnerability {
+
+      &.high {
+        .vulnerability-indicator,
+        .severity {
+          background: $high;
+        }
+      }
+
+      &.medium {
+        .vulnerability-indicator,
+        .severity {
+          background: $medium;
+        }
+      }
+
+      &.low {
+        .vulnerability-indicator,
+        .severity {
+          background: $low;
+        }
+      }
+
+      &-indicator {
+        height: 6px;
+        width: 100%;
+      }
+
+      &-header {
+        position: relative;
+        background: #fff;
+        border: 1px solid $border;
+        border-top: none;
+
+        .severity {
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          min-width: 32px;
+          min-height: 32px;
+          font-size: 18px;
+          color: #fff;
+          border-radius: .25rem;
+        }
+
+      }
+
+      &-meta {
+        font-size: 13px;
+
+        > :not(template) ~ :not(template) {
+          margin-left: .5rem;
+        }
+
+      }
+
+      &-body {
+        background: #F9F8F9;
+        font-size: 15px;
+        border: 1px solid $border;
+        border-top: none;
+
+        dl {
+
+          > :not(template) ~ :not(template) {
+            margin-top: .25rem;
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+  .form-control {
+    font-size: .875rem;
+    line-height: 1.3;
+    height: 2rem;
+    padding: 6px 12px;
+    border-radius: 2px;
+
+    &:focus {
+      box-shadow: none;
+      border-color: $brand;
+    }
+
+  }
+
+  .btn-primary {
+    background-color: #188b8b;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: .875rem;
+    line-height: 1.3;
+    height: 2rem;
+    padding: 6px 12px;
+
+    &:hover,
+    &:focus {
+      border-color: #1ca0a0;
+      background-color: #1ca0a0;
+    }
+
+  }
+
+  #loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  #accordion {
+
+    .form {
+
+      > :not(template) ~ :not(template) {
+        margin-left: 1rem;
+      }
+
+    }
+
+    .btn-link {
+      font-size: 15px;
+      padding: 0;
+      color: $brand;
+  
+      &:focus {
+        box-shadow: none;
+      }
+  
+    }
+
+  }
+
+  #loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    background: #fff;
+
+    .spinner-grow {
+      color: $brand;
+    }
+
+  }
+
 }

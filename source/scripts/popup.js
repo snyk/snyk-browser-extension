@@ -42,16 +42,16 @@ function drawVulnerabilities(vulnerabilities) {
     switch (vulnerability.severity) {
       case 'critical': 
       case 'high': 
-        severityClass = 'bg-danger'
-        severityText = 'High'
+        severityClass = 'high'
+        severityText = 'H'
         break
       case 'medium':
-        severityClass = 'bg-warning'
-        severityText = 'Medium'
+        severityClass = 'medium'
+        severityText = 'M'
         break
       case 'low':
-        severityClass = 'bg-secondary'
-        severityText = 'Low'
+        severityClass = 'low'
+        severityText = 'L'
         break
     }
 
@@ -70,67 +70,73 @@ function drawVulnerabilities(vulnerabilities) {
     }
 
     if (vulnerability.from && vulnerability.from.length > 1) {
-      directOrIndirect = `<span class="badge badge-secondary">indirect</span>`
+      directOrIndirect = `<span class="text-muted">Indirect Vulnerability</span>`
       upgradeInfo = `
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        Upgrade path:
-        <span class="badge badge-primary badge-pill">${upgradePath}</span>
-      </li>
+      <div class="d-flex justify-content-between border-top pt-2">
+        <dt class="font-weight-normal">Upgrade path</dt>
+        <dd class="my-0">${upgradePath ? upgradePath : '–'}</dd>
+      </div>
       `
     } else {
-      directOrIndirect = `<span class="badge badge-secondary">direct</span>`
+      directOrIndirect = `<span class="text-muted">Direct Vulnerability</span>`
       upgradeInfo = `
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        Upgradable:
-        <span class="badge ${isUpgradable} badge-pill">${vulnerability.isUpgradable}</span>
-      </li>
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        Patchable:
-        <span class="badge ${isPatchable} badge-pill">${vulnerability.isPatchable}</span>
-      </li>
+      <div class="d-flex justify-content-between border-top pt-2">
+        <dt class="font-weight-normal">Upgradable</dt>
+        <dd class="my-0">${vulnerability.isUpgradable ? 'Yes' : 'No'}</dd>
+      </div>
+      <div class="d-flex justify-content-between border-top pt-2">
+        <dt class="font-weight-normal">Patchable</dt>
+        <dd class="my-0">${vulnerability.isPatchable ? 'Yes' : 'No'}</dd>
+      </div>
       `
     }
 
     vulnerabilitiesCards += `
-    <div class="card text-white mb-3">
-      <div class="card-header ${severityClass}">${severityText} severity <span class="badge badge-secondary">${vulnerability.cvssScore}</span> ${directOrIndirect}</div>
-      <div class="card-body ${severityClass}">
-        <h5 class="card-title">${vulnerability.title}</h5>
-        <p class="card-text">
+    <div class="vulnerability rounded ${severityClass}">
+      <div class="vulnerability-indicator rounded-top"></div>
+      <div class="vulnerability-header p-3">
+        <div class="d-flex align-items-center">
+          <span class="severity">${severityText}</span>
+          <h2 class="h5 my-0 ml-2">${vulnerability.package}</h2>
+        </div>
+        <p class="vulnerability-title text-muted my-2">${vulnerability.title}</p>
+        <div class="vulnerability-meta d-flex align-items-center">
+          <span class="text-muted number">${vulnerability.version}</span>
+          <span class="text-muted">&middot;</span>
+          <span class="text-muted number">${vulnerability.cvssScore}</span>
+          <span class="text-muted">&middot;</span>
+          ${directOrIndirect}
+        </div>
+      </div>
+      <div class="vulnerability-body rounded-bottom p-3">
 
-        <ul class="list-group text-dark">
-          <li class="list-group-item list-group-item-action flex-column align-items-start active">
-              <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1">${vulnerability.package}</h5>
-              <small>${vulnerability.version}</small>
-            </div>
-            <p class="mb-1">
-              Introduced through:
-              <br/>${vulnerability.from.join(' -> ')}
-            </p>
-          </li>
+        <dl class="text-xs mt-0 mb-3">
+
+          <div class="d-flex justify-content-between">
+            <dt class="font-weight-normal">Introduced through</dt>
+            <dd class="my-0 text-right">${vulnerability.from.join('<br />')}</dd>
+          </div>
 
           ${upgradeInfo}
 
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            CVEs
-            <span class="badge badge-secondary badge-pill">${vulnerability.identifiers.CVE.join(' ')}</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            CWEs
-            <span class="badge badge-secondary badge-pill">${vulnerability.identifiers.CWE.join(' ')}</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            Disclosed at:
-            <span class="badge badge-secondary badge-pill">${new Date(vulnerability.disclosureTime).toLocaleString()}</span>
-          </li>
-        </ul>
+          <div class="d-flex justify-content-between border-top pt-2">
+            <dt class="font-weight-normal">CVEs</dt>
+            <dd class="my-0">${vulnerability.identifiers.CVE.length > 0 ? vulnerability.identifiers.CVE.join(' ') : '–'}</dd>
+          </div>
+          <div class="d-flex justify-content-between border-top pt-2">
+            <dt class="font-weight-normal">CWEs</dt>
+            <dd class="my-0">${vulnerability.identifiers.CWE.length > 0 ? vulnerability.identifiers.CWE.join(' ') : '–'}</dd>
+          </div>
+          <div class="d-flex justify-content-between border-top pt-2">
+            <dt class="font-weight-normal">Disclosed at</dt>
+            <dd class="my-0">${new Date(vulnerability.disclosureTime).toLocaleString()}</dd>
+          </div>
 
-        </p>
-      </div>
-      <div class="card-footer bg-gray text-muted">
+        </dl>
+
         <a target="_blank" href="${vulnerability.url}" onClick="browser.tabs.create({"url": "${vulnerability.url}"})">Learn more</a>
-      </div>  
+
+      </div>
     </div>
     `
   })
@@ -174,23 +180,80 @@ async function retrieveSnykInformation({snykApiToken}) {
       const vulnerabilityIssues = snykPackageData.issues.vulnerabilities
       const licenseIssues = snykPackageData.issues.licenses
       
-      document.getElementById('vulnerabilitiesCount').textContent = `${vulnerabilityIssues.length} vulnerabilities`
       if (vulnerabilityIssues.length > 0) {
-        document.getElementById('vulnerabilitiesStatus').textContent = '❌'
-        $('#vulnerabilitiesHeader').toggleClass('text-danger')
+
+        let high = 0;
+        let medium = 0;
+        let low = 0;
+        
+        vulnerabilityIssues.forEach(function(item, i){
+          if(item.severity === 'high') {
+            ++high;
+          }
+          if(item.severity === 'medium') {
+            ++medium;
+          }
+          if(item.severity === 'low') {
+            ++low;
+          }
+        })
+
+        if(high > 0) {
+          document.getElementById('totalVulnerabilitiesHigh').querySelector('.number').textContent = high
+          document.getElementById('totalVulnerabilitiesHigh').classList.add('high')
+        }
+
+        if(medium > 0) {
+          document.getElementById('totalVulnerabilitiesMedium').querySelector('.number').textContent = medium
+          document.getElementById('totalVulnerabilitiesMedium').classList.add('medium')
+        }
+
+        if(low > 0) {
+          document.getElementById('totalVulnerabilitiesLow').querySelector('.number').textContent = low
+          document.getElementById('totalVulnerabilitiesLow').classList.add('low')
+        }
+
       } else {
-        document.getElementById('vulnerabilitiesStatus').textContent = '✅'
-        $('#vulnerabilitiesHeader').toggleClass('text-success')
+
       }
 
+      console.log(vulnerabilityIssues)
+
       if (licenseIssues.length > 0) {
-        document.getElementById('licensesCount').textContent = `${licenseIssues.length} license issues`
-        document.getElementById('licensesStatus').textContent = '❌'
-        $('#licensesHeader').toggleClass('text-danger')
+
+        let high = 0;
+        let medium = 0;
+        let low = 0;
+        
+        vulnerabilityIssues.forEach(function(item, i){
+          if(item.severity === 'high') {
+            ++high;
+          }
+          if(item.severity === 'medium') {
+            ++medium;
+          }
+          if(item.severity === 'low') {
+            ++low;
+          }
+        })
+
+        if(high > 0) {
+          document.getElementById('totalLicenseIssuesHigh').querySelector('.number').textContent = high
+          document.getElementById('totalLicenseIssuesHigh').classList.add('high')
+        }
+
+        if(medium > 0) {
+          document.getElementById('totalLicenseIssuesMedium').querySelector('.number').textContent = medium
+          document.getElementById('totalLicenseIssuesMedium').classList.add('medium')
+        }
+
+        if(low > 0) {
+          document.getElementById('totalLicenseIssuesLow').querySelector('.number').textContent = low
+          document.getElementById('totalLicenseIssuesLow').classList.add('low')
+        }
+
       } else {
-        document.getElementById('licensesCount').textContent = `No license issues`
-        document.getElementById('licensesStatus').textContent = '✅'
-        $('#licensesHeader').toggleClass('text-success')
+
       }
 
       drawVulnerabilities(vulnerabilityIssues)
