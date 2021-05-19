@@ -175,7 +175,7 @@ async function retrieveSnykInformation({snykApiToken}) {
       const iframe = document.createElement('iframe');
       iframe.scrolling = 'no';
       iframe.srcdoc = html;      
-      $('#healthscore').append(iframe);
+      $('#healthscore').html(iframe);
     })
 
     const url = `https://snyk.io/api/v1/test/npm/${response.packageName}/${response.packageVersion}`
