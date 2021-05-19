@@ -80,6 +80,16 @@ $brand: #4b45a1;
     font-variant-numeric: tabular-nums;
   }
 
+  iframe {
+    width: -webkit-fill-available;
+    height: 270px;
+    border: none;
+    margin: 0 1rem 1rem 1rem;
+    display: block;
+    border-radius: .25rem;
+    pointer-events: none;
+  }
+
   #hero {
 
     > :not(template) ~ :not(template) {
@@ -161,6 +171,10 @@ $brand: #4b45a1;
 
     &:empty {
       display: none;
+    }
+
+    p {
+      font-size: 15px;
     }
 
     .vulnerability {
@@ -278,25 +292,79 @@ $brand: #4b45a1;
     bottom: 0;
   }
 
-  #accordion {
+  .alert {
 
-    .form {
+    a {
+      text-decoration: underline!important;
+      color: inherit;
+    }
 
-      > :not(template) ~ :not(template) {
-        margin-left: 1rem;
+  }
+
+  details {
+
+    &[open] {
+
+      summary {
+        
+        &::after {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-minus' width='16' height='16' viewBox='0 0 24 24' stroke-width='2' stroke='%232c3e50' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none'/%3E%3Cline x1='5' y1='12' x2='19' y2='12' /%3E%3C/svg%3E");
+        }
+
       }
 
     }
 
-    .btn-link {
+    summary {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
       font-size: 15px;
-      padding: 0;
-      color: $brand;
+
+      &::after {
+        content: '';
+        display: block;
+        width: 16px;
+        height: 16px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-plus' width='16' height='16' viewBox='0 0 24 24' stroke-width='2' stroke='%232c3e50' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none'/%3E%3Cline x1='12' y1='5' x2='12' y2='19' /%3E%3Cline x1='5' y1='12' x2='19' y2='12' /%3E%3C/svg%3E");
+        opacity: 0.5;
+      }
+      
+    }
+
+    main {
+      margin-top: 1rem;
+
+      .form {
+
+        > :not(template) ~ :not(template) {
+          margin-left: 1rem;
+        }
+
+        input:placeholder-shown {
+
+          + button {
+            pointer-events: none;
+            opacity: 0.5;
+          }
+
+        }
   
-      &:focus {
-        box-shadow: none;
       }
   
+      .btn-link {
+        font-size: 15px;
+        padding: 0;
+        color: $brand;
+    
+        &:focus {
+          box-shadow: none;
+        }
+    
+      }
+
     }
 
   }

@@ -16,34 +16,9 @@
 
     <div id="loader" class="container d-none">
       <div class="d-flex flex-column align-items-center justify-content-center">
-        <img src="chrome-extension://onchjapjpdppjhlnbdmckaaebgacdgbg/assets/icons/snyk_logo64.png" class="mb-4" />
+        <img src="/assets/icon.svg" width="64" class="mb-4" />
         <div class="spinner-grow" role="status">
           <span class="sr-only">Loading...</span>
-        </div>
-      </div>
-    </div>
-
-    <div id="errorPackageDetails" class="container mb-4 d-none">
-      <div class="d-flex justify-content-center">
-        <div id="errorMessage" class="alert alert-danger" role="alert">
-          <h4 class="alert-heading">
-            Unsupported package repository website
-          </h4>
-          <p class="mb-0">
-            Open this extension in a website like https://npmjs.org/package/react
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div id="errorUnsupportedWebsite" class="container mb-4 d-none">
-      <div class="d-flex justify-content-center">
-        <div id="errorMessage" class="alert alert-danger" role="alert">
-          <h4 class="alert-heading">
-            Unsupported package repository website</h4>
-          <p class="mb-0">
-            Open this extension in a website like https://npmjs.org/package/react
-          </p>
         </div>
       </div>
     </div>
@@ -92,6 +67,8 @@
           </div>
         </div>
 
+        <div id="healthscore"></div>
+
       </div>
 
       <div id="vulnerabilitiesList" class="p-3"></div>
@@ -100,50 +77,44 @@
 
     <div id="apiKeyActivation" class="container my-4">
 
-      <div id="errorAPITokenMissing" class="alert alert-primary d-none" role="alert">
-        <div id="errorMessage">Please get a Snyk API token and update below</div>
+      <div id="errorPackageDetails" class="alert alert-danger d-none" role="alert">
+        <div id="errorMessage">This website is not supported, open this extension with a URL like https://npmjs.org/package/react</div>
       </div>
-      
-      <div id="accordion">
-          
-        <div id="headingOne">
-          <h5>
-            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-              Change API Token
-            </button>
-          </h5>
-        </div>
-    
-        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+
+      <div id="errorAPITokenMissing" class="alert alert-primary d-none" role="alert">
+        <div id="errorMessage">Please get a valid <a id="link_account">Snyk API token</a> and paste it below.</div>
+      </div>
+
+      <details>
+        <summary>Change API Token</summary>
+        <main>
           <div class="form d-flex align-items-center">
             <input
               type="text"
               class="form-control number"
               id="snykApiToken"
-              placeholder="Your Snyk API token"
+              placeholder="Paste here..."
               required
             />
             <button id="buttonSaveApiToken" type="submit" class="btn btn-primary">
               Save
             </button>
-        </div>
+          </div>
+        </main>
+      </details>
 
-      </div>
     </div>
 
     <hr />
 
-    <footer class="pt-4 my-md-5 pt-md-5">
-      <div class="text-center">
-        <img class="d-block mx-auto" src="/assets/icons/snyk_logo64.png" alt="" />
+    <footer>
+      <div class="text-center pt-1 pb-4">
+        <img src="/assets/icon.svg" width="64" alt="" />
         <h2>Snyk</h2>
         <p class="lead">
           Develop Fast. Stay Secure.
         </p>
-        <hr />
-        <ul class="list-unstyled text-small">
-          <li><a id="link_website" class="text-muted" href="#">Learn more</a></li>
-        </ul>
+        <a id="link_website" class="text-muted" href="#">Learn more</a>
       </div>
     </footer>
 
