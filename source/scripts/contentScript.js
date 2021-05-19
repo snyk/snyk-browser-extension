@@ -17,23 +17,28 @@ function getPackageInfoNPM() {
   const packageUrlInfo = window.location
   let packageName = ''
   let packageVersion = ''
-  if (packageUrlInfo.pathname.indexOf('/package') === 0) {
 
-    const packageUrlSegments = packageUrlInfo.pathname.split('/')
-    if (packageUrlSegments.length === 4) {
-      packageName = `${packageUrlSegments[2]}/${packageUrlSegments[3]}`
+  try {
+    if (packageUrlInfo.pathname.indexOf('/package') === 0) {
+
+      const packageUrlSegments = packageUrlInfo.pathname.split('/')
+      if (packageUrlSegments.length === 4) {
+        packageName = `${packageUrlSegments[2]}/${packageUrlSegments[3]}`
+      }
+
+      if (packageUrlSegments.length === 3) {
+        packageName = packageUrlSegments[2]
+      }
     }
 
-    if (packageUrlSegments.length === 3) {
-      packageName = packageUrlSegments[2]
-    }
-  }
+    packageVersion = document.getElementsByClassName('f2874b88 fw6 mb3 mt2 truncate black-80 f4')[0].textContent
 
-  packageVersion = document.getElementsByClassName('f2874b88 fw6 mb3 mt2 truncate black-80 f4')[0].textContent
-
-  return {
-    packageName,
-    packageVersion
+    return {
+      packageName,
+      packageVersion
+    } 
+  } catch(error) {
+    // swallow error as we're unable to operate on this npmjs page
   }
 }
 

@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Snyk",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "icons": {
     "16": "assets/icons/snyk_logo16.png",
     "32": "assets/icons/snyk_logo32.png",

@@ -164,6 +164,12 @@ async function retrieveSnykInformation({snykApiToken}) {
     return;
   }
 
+  if (!response) {
+    $('#results').addClass('d-none');
+    $('#errorPackageDetails').removeClass('d-none');
+    $('details').attr('open', false).find('summary').removeClass('d-none');
+  }
+
   if (snykApiToken && response.packageName && response.packageVersion) {
     
     document.getElementById('packageName').textContent = response.packageName
