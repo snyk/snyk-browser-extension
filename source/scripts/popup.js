@@ -77,7 +77,7 @@ function drawVulnerabilities(vulnerabilities) {
       upgradeInfo = `
       <div class="d-flex justify-content-between border-top pt-2">
         <dt class="font-weight-normal">Upgrade path</dt>
-        <dd class="my-0 number>${upgradePath ? upgradePath : '–'}</dd>
+        <dd class="my-0 number">${upgradePath ? upgradePath : '–'}</dd>
       </div>
       `
     } else {
