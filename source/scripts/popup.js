@@ -2,10 +2,6 @@ import browser from 'webextension-polyfill'
 
 let snykApiToken = ''
 
-function getHTML(type, name) {
-  return fetch(`https://snyk.io/advisor/${type}/${name}/score`).then(res => res.text())
-}
-
 function openWebPage(url) {
   return browser.tabs.create({ url })
 }
@@ -137,7 +133,7 @@ function drawVulnerabilities(vulnerabilities) {
 
         </dl>
 
-        <a target="_blank" href="${vulnerability.url}" onClick="browser.tabs.create({"url": "${vulnerability.url}"})">Learn more</a>
+        <a target="_blank" href="${vulnerability.url}?utm_medium=Referral&utm_source=Google&utm_campaign=Chrome-Extension&utm_content=Vuln" onClick="browser.tabs.create({"url": "${vulnerability.url}?utm_medium=Referral&utm_source=Google&utm_campaign=Chrome-Extension&utm_content=Vuln"})">Learn more</a>
 
       </div>
     </div>
@@ -177,12 +173,8 @@ async function retrieveSnykInformation({snykApiToken}) {
 
     $('#loader').removeClass('d-none');
 
-    getHTML('npm-package', response.packageName).then(html => {
-      const iframe = document.createElement('iframe');
-      iframe.scrolling = 'no';
-      iframe.srcdoc = html;      
-      $('#healthscore').html(iframe);
-    })
+    const advisorUrl = `https://snyk.io/advisor/npm-package/${response.packageName}?utm_medium=Referral&utm_source=Google&utm_campaign=Chrome-Extension&utm_content=Advisor`;
+    $('#healthscore').after(`<a target="_blank" href="${advisorUrl}" onClick="browser.tabs.create({"url": "${advisorUrl}"})" class="d-block px-3 pb-3 pt-0">View package health on Snyk Advisor</a>`)
 
     const url = `https://snyk.io/api/v1/test/npm/${response.packageName}/${response.packageVersion}`
     try {
@@ -280,8 +272,6 @@ async function retrieveSnykInformation({snykApiToken}) {
             document.getElementById('totalLicenseIssuesLow').querySelector('.number').textContent = low
             document.getElementById('totalLicenseIssuesLow').classList.add('low')
           }
-
-        } else {
 
         }
 
