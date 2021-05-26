@@ -28,6 +28,7 @@ function sortByServerity(data) {
 function drawVulnerabilities(vulnerabilities) {
 
   const vulnerabilitiesList = document.getElementById('vulnerabilitiesList')
+
   let vulnerabilitiesCards = ''
 
   let upgradePath = ''
@@ -174,7 +175,9 @@ async function retrieveSnykInformation({snykApiToken}) {
     $('#loader').removeClass('d-none');
 
     const advisorUrl = `https://snyk.io/advisor/npm-package/${response.packageName}?utm_medium=Referral&utm_source=Google&utm_campaign=Chrome-Extension&utm_content=Advisor`;
-    $('#healthscore').after(`<a target="_blank" href="${advisorUrl}" onClick="browser.tabs.create({"url": "${advisorUrl}"})" class="d-block px-3 pb-3 pt-0">View package health on Snyk Advisor</a>`)
+    const scoreUrl = `http://snyk.io/advisor/npm-package/${response.packageName}/score`;
+    $('#healthscore').after(`<a target="_blank" href="${advisorUrl}" onClick="browser.tabs.create({"url": "${advisorUrl}"})" class="d-block px-3 pb-3 pt-0">View package health on Snyk Advisor</a>`);
+    $('#healthscore iframe').prop('src', scoreUrl)
 
     const url = `https://snyk.io/api/v1/test/npm/${response.packageName}/${response.packageVersion}`
     try {
