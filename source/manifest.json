@@ -36,12 +36,6 @@
     "chrome_style": false,
     "browser_style": false
   },
-  "options_page": "options.html",
-  "options_ui": {
-    "page": "options.html",
-    "open_in_tab": true,
-    "chrome_style": false
-  },
   "background": {
     "scripts": [
       "js/background.bundle.js"
