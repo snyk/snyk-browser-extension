@@ -310,7 +310,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   })
 
   document.getElementById('link_account').addEventListener('click', () => {
-    return openWebPage('https://snyk.io/account')
+    return openWebPage('https://app.snyk.io/account')
   })
 
   const buttonSaveApiToken = document.getElementById('buttonSaveApiToken')
