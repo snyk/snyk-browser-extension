@@ -182,7 +182,7 @@ async function retrieveSnykInformation({ snykApiToken }) {
     $('#loader').removeClass('d-none')
 
     const advisorUrl = `https://snyk.io/advisor/npm-package/${response.packageName}?utm_medium=Referral&utm_source=Google&utm_campaign=Chrome-Extension&utm_content=Advisor`
-    const scoreUrl = `http://snyk.io/advisor/npm-package/${response.packageName}/score`
+    const scoreUrl = `https://snyk.io/advisor/npm-package/${response.packageName}/score`
     $('#healthscore').after(
       `<a target="_blank" href="${advisorUrl}" onClick="browser.tabs.create({"url": "${advisorUrl}"})" class="d-block px-3 pb-3 pt-0">View package health on Snyk Advisor</a>`
     )
