@@ -2,7 +2,7 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-prototype-builtins */
-import browser from 'webextension-polyfill';
+import browser from 'webextension-polyfill'
 
 function getPackageInfo() {
   const host = window.location.host
@@ -10,7 +10,7 @@ function getPackageInfo() {
     return getPackageInfoNPM()
   }
 
-  return false;
+  return false
 }
 
 function getPackageInfoNPM() {
@@ -20,7 +20,6 @@ function getPackageInfoNPM() {
 
   try {
     if (packageUrlInfo.pathname.indexOf('/package') === 0) {
-
       const packageUrlSegments = packageUrlInfo.pathname.split('/')
       if (packageUrlSegments.length === 4) {
         packageName = `${packageUrlSegments[2]}/${packageUrlSegments[3]}`
@@ -31,19 +30,17 @@ function getPackageInfoNPM() {
       }
     }
 
-    packageVersion = document.getElementsByClassName('f2874b88 fw6 mb3 mt2 truncate black-80 f4')[0].textContent
+    packageVersion = document.getElementsByClassName('flex flex-row items-center')[1].textContent
 
     return {
       packageName,
       packageVersion
-    } 
-  } catch(error) {
+    }
+  } catch (error) {
     // swallow error as we're unable to operate on this npmjs page
   }
 }
 
-browser.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    return sendResponse(getPackageInfo())
-  }
-);
+browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  return sendResponse(getPackageInfo())
+})
