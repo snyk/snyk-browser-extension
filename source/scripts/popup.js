@@ -40,6 +40,9 @@ function drawVulnerabilities(vulnerabilities) {
     let severityText = ''
     switch (vulnerability.severity) {
       case 'critical':
+        severityClass = 'critical'
+        severityText = 'C'
+        break
       case 'high':
         severityClass = 'high'
         severityText = 'H'
@@ -239,7 +242,7 @@ async function retrieveSnykInformation({ snykApiToken }) {
             }
           })
 
-          if (high > 0) {
+          if (critical > 0) {
             document
               .getElementById('totalVulnerabilitiesCritical')
               .querySelector('.number').textContent = critical

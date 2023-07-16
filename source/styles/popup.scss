@@ -214,6 +214,13 @@ $brand: #4b45a1;
 
     .vulnerability {
 
+      &.critical {
+        .vulnerability-indicator,
+        .severity {
+          background: $critical;
+        }
+      }
+
       &.high {
         .vulnerability-indicator,
         .severity {
