@@ -1,7 +1,7 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Snyk",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "icons": {
     "16": "assets/icons/snyk_logo16.png",
     "32": "assets/icons/snyk_logo32.png",
@@ -13,16 +13,20 @@
   "description": "Find, prioritize and fix vulnerabilities in the open source dependencies used to build your cloud native applications",
   "homepage_url": "https://snyk.io",
   "short_name": "snyk",
-  "content_security_policy": "script-src 'self'; object-src 'self'",
-  "permissions": [
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "host_permissions": [
     "http://*.npmjs.com/*",
     "https://*.npmjs.com/*",
-    "https://snyk.io/*",
+    "https://snyk.io/*"
+  ],
+  "permissions": [
     "storage"
   ],
   "author": "snyk",
   "minimum_chrome_version": "49",
-  "browser_action": {
+  "action": {
     "default_popup": "popup.html",
     "default_icon": {
       "16": "assets/icons/snyk_logo16.png",
@@ -32,15 +36,7 @@
       "96": "assets/icons/snyk_logo96.png",
       "128": "assets/icons/snyk_logo128.png"
     },
-    "default_title": "Snyk | Develop Fast. Stay Secure",
-    "chrome_style": false,
-    "browser_style": false
-  },
-  "background": {
-    "scripts": [
-      "js/background.bundle.js"
-    ],
-    "persistent": true
+    "default_title": "Snyk | Develop Fast. Stay Secure"
   },
   "content_scripts": [
     {
