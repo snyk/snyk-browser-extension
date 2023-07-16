@@ -12,6 +12,9 @@ It builds upon [Snyk Open Source](https://snyk.io/product/open-source-security-m
 
 ## Development
 
+Pre-requisites:
+* Node.js version 16
+
 Install all dependencies:
 
 ```
