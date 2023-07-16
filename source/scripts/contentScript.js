@@ -42,5 +42,6 @@ function getPackageInfoNPM() {
 }
 
 browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  return sendResponse(getPackageInfo())
+  const data = getPackageInfo()
+  return Promise.resolve(data)
 })
