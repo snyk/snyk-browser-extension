@@ -2,6 +2,8 @@
 
 $fontDisplayFallback: fallback !default;
 $fontDisplayOptional: optional !default;
+$critical: #9e261e;
+$critical-light: #ffdad8;
 $high: #B74E29;
 $high-light: #F9D7C7;
 $medium: #C57A2B;
@@ -133,6 +135,17 @@ $brand: #4b45a1;
         }
       }
   
+      .critical {
+        .number {
+          background: $critical-light;
+          color: $critical;
+        }
+        .letter {
+          background: $critical;
+          color: #fff;
+        }
+      }
+      
       .high {
         .number {
           background: $high-light;
