@@ -1,17 +1,17 @@
-const path = require('path');
-const webpack = require('webpack');
-const ZipPlugin = require('zip-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-const ExtensionReloader = require('webpack-extension-reloader');
+const path = require('path')
+const webpack = require('webpack')
+const ZipPlugin = require('zip-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const ExtensionReloader = require('webpack-extension-reloader')
 // const WextManifestWebpackPlugin = require('wext-manifest-webpack-plugin');
-const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
-const nodeEnv = process.env.NODE_ENV || 'development';
-const targetBrowser = process.env.TARGET_BROWSER;
+const nodeEnv = process.env.NODE_ENV || 'development'
+const targetBrowser = process.env.TARGET_BROWSER
 
 const extensionReloaderPlugin =
   nodeEnv === 'development'
@@ -21,25 +21,25 @@ const extensionReloaderPlugin =
         entries: {
           // TODO: reload manifest on update
           contentScript: 'contentScript',
-          injected: 'injected',
+          // injected: 'injected',
           background: 'background',
-          extensionPage: ['popup', 'options'],
-        },
+          extensionPage: ['popup', 'options']
+        }
       })
     : () => {
-        this.apply = () => {};
-      };
+        this.apply = () => {}
+      }
 
 const getExtensionFileType = (browser) => {
   if (browser === 'opera') {
-    return 'crx';
+    return 'crx'
   }
   if (browser === 'firefox') {
-    return 'xpi';
+    return 'xpi'
   }
 
-  return 'zip';
-};
+  return 'zip'
+}
 
 module.exports = {
   devtool: false, // https://github.com/webpack/webpack/issues/1194#issuecomment-560382342
@@ -50,7 +50,7 @@ module.exports = {
     all: false,
     builtAt: true,
     errors: true,
-    hash: true,
+    hash: true
   },
 
   entry: {
@@ -59,12 +59,12 @@ module.exports = {
     contentScript: './source/scripts/contentScript.js',
     popup: './source/scripts/popup.js',
     options: './source/scripts/options.js',
-    styles: ['./source/styles/popup.scss', './source/styles/options.scss'],
+    styles: ['./source/styles/popup.scss', './source/styles/options.scss']
   },
 
   output: {
     path: path.resolve(__dirname, 'extension', targetBrowser),
-    filename: 'js/[name].bundle.js',
+    filename: 'js/[name].bundle.js'
   },
 
   module: {
@@ -81,7 +81,10 @@ module.exports = {
       // },
       {
         test: /.(js|jsx)$/,
-        include: [path.resolve(__dirname, 'source/scripts'), path.resolve(__dirname, 'source/injected')],
+        include: [
+          path.resolve(__dirname, 'source/scripts')
+          // path.resolve(__dirname, 'source/injected')
+        ],
         loader: 'babel-loader',
         options: {
           plugins: ['syntax-dynamic-import'],
@@ -89,11 +92,11 @@ module.exports = {
             [
               '@babel/preset-env',
               {
-                modules: false,
-              },
-            ],
-          ],
-        },
+                modules: false
+              }
+            ]
+          ]
+        }
       },
       {
         test: /\.scss$/,
@@ -103,29 +106,29 @@ module.exports = {
             options: {
               name: '[name].css',
               context: './source/styles/',
-              outputPath: 'css/',
-            },
+              outputPath: 'css/'
+            }
           },
           'extract-loader',
           {
             loader: 'css-loader',
             options: {
-              sourceMap: nodeEnv === 'development',
-            },
+              sourceMap: nodeEnv === 'development'
+            }
           },
           {
             loader: 'postcss-loader',
             options: {
               ident: 'postcss',
               // eslint-disable-next-line global-require
-              plugins: [require('autoprefixer')()],
-            },
+              plugins: [require('autoprefixer')()]
+            }
           },
           'resolve-url-loader',
-          'sass-loader',
-        ],
-      },
-    ],
+          'sass-loader'
+        ]
+      }
+    ]
   },
 
   plugins: [
@@ -133,9 +136,9 @@ module.exports = {
     // Generate manifest.json
     // new WextManifestWebpackPlugin(),
     // Generate sourcemaps
-    new webpack.SourceMapDevToolPlugin({filename: false}),
+    new webpack.SourceMapDevToolPlugin({ filename: false }),
     // Remove style entries js bundle
-    new FixStyleOnlyEntriesPlugin({silent: true}),
+    new FixStyleOnlyEntriesPlugin({ silent: true }),
     new webpack.EnvironmentPlugin(['NODE_ENV', 'TARGET_BROWSER']),
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: [
@@ -143,26 +146,26 @@ module.exports = {
         path.join(
           process.cwd(),
           `extension/${targetBrowser}.${getExtensionFileType(targetBrowser)}`
-        ),
+        )
       ],
       cleanStaleWebpackAssets: false,
-      verbose: true,
+      verbose: true
     }),
     new HtmlWebpackPlugin({
       template: 'source/options.html',
       // inject: false,
       chunks: ['options'],
-      filename: 'options.html',
+      filename: 'options.html'
     }),
     new HtmlWebpackPlugin({
       template: 'source/popup.html',
       // inject: false,
       chunks: ['popup'],
-      filename: 'popup.html',
+      filename: 'popup.html'
     }),
-    new CopyWebpackPlugin([{from: 'source/assets', to: 'assets'}]),
-    new CopyWebpackPlugin([{from: 'source/manifest.json', to: 'manifest.json'}]),
-    extensionReloaderPlugin,
+    new CopyWebpackPlugin([{ from: 'source/assets', to: 'assets' }]),
+    new CopyWebpackPlugin([{ from: 'source/manifest.json', to: 'manifest.json' }]),
+    extensionReloaderPlugin
   ],
 
   optimization: {
@@ -172,21 +175,21 @@ module.exports = {
         parallel: true,
         terserOptions: {
           output: {
-            comments: false,
-          },
+            comments: false
+          }
         },
-        extractComments: false,
+        extractComments: false
       }),
       new OptimizeCSSAssetsPlugin({
         cssProcessorPluginOptions: {
-          preset: ['default', {discardComments: {removeAll: true}}],
-        },
+          preset: ['default', { discardComments: { removeAll: true } }]
+        }
       }),
       new ZipPlugin({
         path: path.resolve(__dirname, 'extension'),
         extension: `${getExtensionFileType(targetBrowser)}`,
-        filename: `${targetBrowser}`,
-      }),
-    ],
-  },
-};
+        filename: `${targetBrowser}`
+      })
+    ]
+  }
+}
