@@ -317,8 +317,13 @@ async function retrieveSnykInformation({ snykApiToken }) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const storage = await browser.storage.local.get()
-  snykApiToken = storage['apiToken']
+  let storage
+  try {
+    storage = await browser.storage.local.get()
+    snykApiToken = storage['apiToken']
+  } catch (error) {
+    console.error('Extension error: ', 'unable to retrieve local storage data')
+  }
 
   if (snykApiToken) {
     document.getElementById('snykApiToken').value = snykApiToken
