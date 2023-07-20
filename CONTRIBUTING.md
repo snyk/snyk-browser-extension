@@ -1,6 +1,6 @@
 # CONTRIBUTING.md
 
-First and foremost, thank you for considering contributing to Parlay! Your contribution is valuable and we genuinely appreciate your interest. 
+First and foremost, thank you for considering contributing to this project! Your contribution is valuable and we genuinely appreciate your interest. 
 
 This is a distinct software project developed by Snyk. Although separate from our core product line, it provides a platform for us to demonstrate our capabilities and some key concepts. 
 
