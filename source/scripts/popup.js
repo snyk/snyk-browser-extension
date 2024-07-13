@@ -188,7 +188,7 @@ async function retrieveSnykInformation({ snykApiToken }) {
     )
     $('#healthscore iframe').prop('src', scoreUrl)
 
-    const url = `https://snyk.io/api/v1/test/npm/${response.packageName}/${response.packageVersion}`
+    const url = `https://api.snyk.io/v1/test/npm/${response.packageName}/${response.packageVersion}`
     try {
       const vulnerabilitiesData = await fetch(url, {
         headers: {
